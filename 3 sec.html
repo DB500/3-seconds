@@ -19,15 +19,15 @@
 
 
         }
-        button {
+        #button1 {
             width: 200px;
             height: 200px;
-            background-color: white;
             font-family: Stencil;
 
         }
-        table {
-            margin-top: 200px;
+        #button2 {
+            margin-left: 43%;
+
         }
 
 
@@ -50,37 +50,53 @@
 
     </div>
 </div>
+<br><br><br><br>
+<p>
+    <a class="btn btn-primary" id="button2" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Stats</a>
+    <button class="btn btn-primary"  type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Runs</button>
+    <button class="btn btn-primary"  type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">All</button>
+</p>
+<div class="row">
+    <div class="col">
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+            <div class="card card-body">
+                <table class="table" id="table1">
+                    <thead>
+                    <tr>
+                        <th scope="col"># of Attempts</th>
+                        <th scope="col">Min</th>
+                        <th scope="col">Max</th>
+                        <th scope="col">Avg</th>
 
-<table class="table" id="table1">
-    <thead>
-    <tr>
-        <th scope="col"># of Attempts</th>
-        <th scope="col">Min</th>
-        <th scope="col">Max</th>
-        <th scope="col">Avg</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-    </tr>
-    </thead>
-    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="collapse multi-collapse" id="multiCollapseExample2">
+            <div class="card card-body">
+                <table class="table table-sm" id="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">Stop Time</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-    </tbody>
-</table>
-
-
-<table class="table table-sm" id="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Start Time</th>
-        <th scope="col">Stop Time</th>
-        <th scope="col">Time</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
-
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
@@ -96,6 +112,7 @@
             alpha[1] = TimeGet();
             let f = (alpha[1] - alpha[0]);
             let final = f.toFixed(2);
+
             if (final < lowfail) {
                 change.className = "btn btn-danger btn-lg";
             } else if (final >= lowfail && final < lowwin) {
@@ -126,20 +143,28 @@
             newcell2.innerHTML = alpha[1];
 
 
-            if (final <= alpha[3]) {
+
+            if (alpha[3] === 0) {
+                alpha[4] = final;
+                newcell4.innerHTML = alpha[4];
+            }
+            else if(final < alpha[4]) {
                 newcell4.innerHTML = final;
+                alpha[4] = final;
             }
-            else newcell4.innerHTML = alpha[3];
-            if (final >= alpha[3]) {
+
+            if (final > alpha[3]) {
                 newcell5.innerHTML = final;
+                alpha[3] = final;
             }
+
 
             newcell3.innerHTML = alpha[2];
-            alpha[3] = final;
-            newcell10.innerHTML = alpha[3];
+            newcell10.innerHTML = final;
 
 
-            //newcell6.innerHTML = alpha[2];
+            newcell6.innerHTML = alpha[2];
+
 
 
         }
@@ -164,8 +189,13 @@
     let highfail = 3.50;
     let lowfail = 2.50;
     let win = 3.00;
+    let avg = alpha[5];
     alpha[2] = 0;
     alpha[3] = 0;
+    alpha[5] = 0;
+    newcell4.innerHTML = "0";
+    newcell4.innerHTML = "0";
+
 
 
 
