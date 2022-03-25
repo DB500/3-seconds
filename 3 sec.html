@@ -24,7 +24,7 @@
         #button1 {
             width: 200px;
             height: 200px;
-            font-family: Stencil;
+            font-family: Stencil, serif;
 
         }
         #button2 {
@@ -40,7 +40,7 @@
 
 <h2><b><u>How to Win</u></b></h2>
 <p>
-    Click the stop button exactly at 3 seconds + or - .2 seconds
+    Click the stop button exactly at 3 seconds. The button will turn green if you get it exactly on 3 seconds, blue if your with .2, yellow if your within .5, and red any further away.
 </p>
 <h2><b><u>How to Play</u></b></h2>
 <p>
@@ -107,37 +107,41 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.com/libraries/Chart.js"></script>
+
 
 <script>
 
-    const labels = [
-        'January',
-        'February',
-        'March',
-    ];
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: '3 Seconds Game Results',
-            backgroundColor: 'rgb(0,0,0)',
-            borderColor: 'rgb(0, 0, 0)',
-            data: [1,5,7,8],
-        }]
-    };
-
-    const config = {
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, {
         type: 'line',
-        data: data,
-        options: {}
-    };
+        data: {
+            labels: [],
+            datasets: [{
+                label: '3 seconds Game Results',
+                data:[],
+                backgroundColor: [
+                    'rgb(0,0,0)',
+
+                ],
+                borderColor: [
+                    'rgb(0, 0, 0)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 </script>
 
-<script>
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
-</script>
+
 
 
 <script>
@@ -222,8 +226,8 @@
                 alpha[5] = avg;
                 newcell6.innerHTML = avg.toFixed(2);
             }
-
-
+            alert(alpha[3]);
+            addData(myChart, alpha[2], newcell10.innerHTML);
 
 
         }
@@ -242,9 +246,15 @@
         }
         function Reverse() {
                 if (Math.sign(alpha[0]) === -1 ) {
-                    alert(alpha[0]);
                     alpha[0] = (alpha[0])+60;
                 }
+        }
+        function addData(chart, alpha, beta) {
+            chart.data.labels.push(alpha);
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(beta);
+            });
+            chart.update();
         }
 
     }
